@@ -1,0 +1,15 @@
+- name: Install systemd service for MailDev
+  loop:
+    - /etc/systemd/system/maildev.service
+  template:
+    src: systemd/maildev.service
+    dest: "{{ item }}"
+  notify: Restart MailDev
+
+- name: Enable and start MailDev
+  systemd:
+    daemon_reload: yes
+    name: maildev
+    enabled: yes
+    state: started
+  register: maildev_enable_and_start_systemd_result

@@ -1,0 +1,5 @@
+- name: Restart MailDev
+  when: not maildev_enable_and_start_systemd_result.changed
+  service:
+    name: maildev
+    state: restarted

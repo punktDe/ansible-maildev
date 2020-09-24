@@ -1,0 +1,12 @@
+- name: Template nginx config for MailDev
+  loop:
+    - src: nginx/http.d/maildev.conf
+      dest: "{{ nginx.prefix.config }}/http.d/maildev.conf"
+    - src: nginx/stream.d/maildev.conf
+      dest: "{{ nginx.prefix.config }}/stream.d/maildev.conf"
+  loop_control:
+    label: "{{ item.src }}"
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  notify: Reload nginx
