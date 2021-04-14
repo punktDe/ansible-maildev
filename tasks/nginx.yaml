@@ -1,3 +1,13 @@
+- name: Create users in nginx .htpasswd file
+  when: maildev.htpasswd
+  loop: "{{ maildev.htpasswd.users | dict2items }}"
+  htpasswd:
+    path: /etc/nginx/.htpasswd
+    name: "{{ item.key }}"
+    password: "{{ item.value }}"
+  loop_control:
+    label: "{{ item.key }}"
+
 - name: Template nginx config for MailDev
   loop:
     - src: nginx/http.d/maildev.conf
