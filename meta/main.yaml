@@ -1,3 +1,5 @@
 dependencies:
   - role: docker
+  - role: dehydrated
+    when: maildev.use_dehydrated
   - role: nginx
